@@ -1,0 +1,205 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
+import pandas as pd 
+
+
+# In[2]:
+
+
+import seaborn as sns
+
+
+# In[3]:
+
+
+import matplotlib.pyplot as plt
+
+
+# In[4]:
+
+
+get_ipython().run_line_magic('matplotlib', 'inline')
+
+
+# In[6]:
+
+
+import re
+
+
+# In[8]:
+
+
+import numpy as np 
+
+
+# In[9]:
+
+
+my_data = pd.read_csv('/storage/emulated/0/Download/diabetes.csv')
+
+
+# In[10]:
+
+
+my_data.head()
+
+
+# In[11]:
+
+
+my_data.tail()
+
+
+# In[12]:
+
+
+my_data
+
+
+# In[13]:
+
+
+###to get a random sample of the data 
+my_data.sample(n= 3)
+
+
+# In[14]:
+
+
+my_data.columns.to_list()
+
+
+# In[15]:
+
+
+my_data.info()
+
+
+# In[16]:
+
+
+my_data.BMI[764]
+
+
+# In[17]:
+
+
+my_data['BMI'].unique ()
+
+
+# In[18]:
+
+
+my_data['Age'].unique()
+
+
+# In[19]:
+
+
+my_data.isnull().sum()
+
+
+# In[20]:
+
+
+my_data.describe()
+
+
+# In[21]:
+
+
+##LINE PLOT
+sns.lineplot(data=my_data)
+
+
+# In[22]:
+
+
+plt.figure(figsize=(14,6))
+plt.title("Factors Causing an Increase in Diabetes") 
+sns.lineplot(data=my_data)
+
+
+# In[23]:
+
+
+list(my_data.columns)
+
+
+# In[24]:
+
+
+plt.figure(figsize=(20,10)) 
+plt.title("Factors Causing Increase in Diabetes") 
+sns.lineplot(data=my_data['BMI'], label="Glucose") 
+sns.lineplot(data=my_data['Age'], label="Age") 
+plt.xlabel("Outcome")
+
+
+# In[25]:
+
+
+sns.lineplot(data=my_data['Glucose'], label="Glucose") 
+plt.xlabel("Outcome")
+
+
+# In[26]:
+
+
+#still reading and analysing the data, let's use a bar plot to see which factor has the highest outcomes
+
+
+# In[27]:
+
+
+sns.barplot(y='Glucose', x='Outcome',data=my_data, estimator=np.mean);
+
+
+# In[28]:
+
+
+#from the bar plot above that those with higher Glucose levels had an out come of 1 signifying Type-1- diabetes
+#showing that high glucose level is a factor that can predispose a person to diabetes
+
+
+# In[29]:
+
+
+sns.barplot(y='Age', x='Outcome',data=my_data, estimator=np.average)
+
+
+# In[30]:
+
+
+sns.barplot(x=my_data.index,y=my_data['Age']) 
+plt.ylabel("Age as a factor that increases diabetes")
+
+
+# In[32]:
+
+
+sns.scatterplot(x=my_data['Age'], y=my_data['Outcome'])
+
+
+# In[34]:
+
+
+sns.scatterplot(x=my_data['Age'], y=my_data['Pregnancies'], hue=my_data['Outcome'])
+
+
+# In[38]:
+
+
+sns.regplot(x=my_data['Age'],y=my_data['Pregnancies'])
+
+
+# In[ ]:
+
+
+#from the plot about the relationship between age, the number of pregnancies is linear.  Both resulting to an outcome of increasing diabetes
+
